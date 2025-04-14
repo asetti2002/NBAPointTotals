@@ -11,6 +11,6 @@ classification). We employ a diverse set of models including logistic regression
 vector machines, deep neural networks, and random forest regression for static
 features, and further extend our analysis with a Long Short-Term Memory (LSTM)
 network to capture sequential trends in game performance. Through feature
-engineering the goal is to uncover underlying patterns that drive outcomes. Our results
+engineering the goal is to uncover underlying patterns that drive outcomes. The results
 offer insights into the comparative strength of the models and contribute to a growing
 body of research into sports analytics and betting.
