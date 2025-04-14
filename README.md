@@ -1,3 +1,6 @@
+**Predicting NBA Point Totals in Sportsbetting**
+
+
 This project explores the application of machine learning in the domain of NBA sports
 betting by addressing this problem both in regression and classification tasks. Utilizing
 extensive NBA dataset that contains a variety of betting odds sourced from Kaggle and
