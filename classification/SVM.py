@@ -7,8 +7,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
 
 
 
@@ -32,8 +30,6 @@ def main():
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
-
-
 
     svm_model = SVC(probability=True, random_state=42)
     svm_model.fit(X_train_scaled, y_train)
