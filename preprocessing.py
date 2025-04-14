@@ -60,8 +60,8 @@ def main():
         })
 
     games_df = pd.DataFrame(games)
+    games_df = games_df.dropna()
+    games_df.to_csv('data/games_df.csv', index=False)
 
-
-    print(games_df.head())
 if __name__ == '__main__':
     main()
