@@ -42,20 +42,21 @@ Xte = torch.tensor(X_test_scaled,  dtype=torch.float32)
 ytr = torch.tensor(y_train_scaled, dtype=torch.float32)
 
 class DNNRegressor(nn.Module):
-    def __init__(self, in_dim, h1=64, h2=32, out_dim=1):
+    def __init__(self, in_dim, h1=64, h2=32, h3=16, out_dim=1):
         super().__init__()
         self.fc1 = nn.Linear(in_dim, h1)
         self.fc2 = nn.Linear(h1, h2)
-        self.fc3 = nn.Linear(h2, out_dim)
+        self.fc3 = nn.Linear(h2, h3)
+        self.fc4 = nn.Linear(h3, out_dim)
         self.relu = nn.ReLU()
+        
     def forward(self, x):
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
-        return self.fc3(x)
+        x = self.relu(self.fc3(x))
+        return self.fc4(x)
 
 model = DNNRegressor(Xtr.shape[1])
-
-
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
