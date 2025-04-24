@@ -1,14 +1,16 @@
 import pandas as pd 
 import numpy as np
 import pandas as pd
+import os
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve, confusion_matrix
 
 def main():
     games_df = pd.read_csv('data/games_df.csv')
@@ -37,6 +39,54 @@ def main():
     print("Logistic Regression Accuracy:", accuracy_score(y_test, lr_preds))
     print("Classification Report (Logistic Regression):")
     print(classification_report(y_test, lr_preds))
+
+
+    #     import os
+    # import seaborn as sns
+
+    # Ensure output directory exists
+    os.makedirs('classification_plots/LR', exist_ok=True)
+
+    # 1. Predicted probabilities and labels
+    probs = lr_model.predict_proba(X_test_scaled)[:, 1]
+    preds = lr_model.predict(X_test_scaled)
+
+    # 2. ROC Curve
+    fpr, tpr, _ = roc_curve(y_test, probs)
+    roc_auc = roc_auc_score(y_test, probs)
+    plt.figure()
+    plt.plot(fpr, tpr, label=f'ROC (AUC={roc_auc:.2f})')
+    plt.plot([0, 1], [0, 1], linestyle='--')
+    plt.title('ROC Curve – Logistic Regression')
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.legend(loc='lower right')
+    plt.savefig('classification_plots/LR/roc_curve.png')
+    plt.close()
+
+    # 3. Precision-Recall Curve
+    precision, recall, _ = precision_recall_curve(y_test, probs)
+    plt.figure()
+    plt.plot(recall, precision)
+    plt.title('Precision-Recall Curve – Logistic Regression')
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.savefig('classification_plots/LR/precision_recall_curve.png')
+    plt.close()
+
+    # 4. Confusion Matrix
+    cm = confusion_matrix(y_test, preds)
+    plt.figure()
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                xticklabels=['Under','Over'], yticklabels=['Under','Over'])
+    plt.title('Confusion Matrix – Logistic Regression')
+    plt.xlabel('Predicted Label')
+    plt.ylabel('True Label')
+    plt.savefig('classification_plots/LR/confusion_matrix.png')
+    plt.close()
+
+    print("Saved Logistic Regression plots under classification_plots/LR/")
+
 
 
 if __name__ == "__main__":

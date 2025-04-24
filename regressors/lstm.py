@@ -13,6 +13,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.metrics import mean_squared_error
+import os
+import matplotlib.pyplot as plt
 
 games_df = pd.read_csv('data/games_df.csv')
 
@@ -82,6 +84,7 @@ model = LSTMRegressor(input_size, hidden_size, num_layers, output_size)
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
+loss_history = []
 
 num_epochs = 1000
 for epoch in range(num_epochs):
@@ -91,6 +94,7 @@ for epoch in range(num_epochs):
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
+    loss_history.append(loss.item())
     
     if (epoch + 1) % 100 == 0:
         print(f"Epoch {epoch+1}/{num_epochs}, Loss: {loss.item():.4f}")
@@ -125,3 +129,13 @@ true_labels = (y_test_flat > open_lines_test).astype(int)
 # Compute the accuracy of the over/under decisions.
 over_under_accuracy = accuracy_score(true_labels, pred_labels)
 print("Over/Under Accuracy: {:.2%}".format(over_under_accuracy))
+
+os.makedirs('regression_plots/LSTM', exist_ok=True)
+
+plt.figure()
+plt.plot(loss_history)
+plt.title('Training Loss (Scaled)')
+plt.xlabel('Epoch')
+plt.ylabel('MSE Loss')
+plt.savefig('regression_plots/LSTM/train_loss.png')
+plt.close()
