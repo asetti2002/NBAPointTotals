@@ -39,9 +39,5 @@ def main():
     print(classification_report(y_test, lr_preds))
 
 
-
-
-
-
 if __name__ == "__main__":
     main()
