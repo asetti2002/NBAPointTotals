@@ -18,4 +18,5 @@ body of research into sports analytics and betting.
 
 In order to run the programs, simply run the files individually.
 
-(e.g. classification/dnn_class
+Type this in the terminal:
+(e.g. "python3 classification/dnn_class")
