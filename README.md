@@ -14,3 +14,8 @@ network to capture sequential trends in game performance. Through feature
 engineering the goal is to uncover underlying patterns that drive outcomes. The results
 offer insights into the comparative strength of the models and contribute to a growing
 body of research into sports analytics and betting.
+
+
+In order to run the programs, simply run the files individually.
+
+(e.g. classification/dnn_class
